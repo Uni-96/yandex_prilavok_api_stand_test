@@ -16,7 +16,7 @@ def new_token(): # хэдер с актуальным токеном
     response = post_new_user(data.user_body)
     dict = response.json()  # получить словарь из объекта Response
     auth_token = dict['authToken']  # переменная, которая хранит актуальный токен
-    current_headers_create_kit = data.headers_create_kit.copy()  # скопируем хэдеры headers_create_kit, чтобы не менять в исходном словаре
+    current_headers_create_kit = data.headers.copy()
     current_headers_create_kit["Authorization"] = "Bearer " + auth_token
     return current_headers_create_kit
 

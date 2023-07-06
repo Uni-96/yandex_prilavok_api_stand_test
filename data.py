@@ -10,7 +10,7 @@ user_body = {
 
 headers_create_kit = {
     "Content-Type": "application/json",
-    "Authorization": "Bearer 92380146-21f8-4819-95f1-b17f4dc4c319"
+    "Authorization": "Bearer token"
 }
 
 new_kit_body = {

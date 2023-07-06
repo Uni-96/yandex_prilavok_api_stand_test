@@ -7,18 +7,20 @@ def post_new_user(body): #ф-ия создания нового пользова
                          json=body,
                          headers=data.headers)
 
-def post_new_client_kit(kit_body): # ф-ия создания набора
-    response = post_new_user(data.user_body)
-    dict = response.json()  # получить словарь из объекта Response
-    key = 'authToken'
-    auth_token = dict[key] #переменная, которая хранит актуальный токен
+def new_name_create_kit (kit_body): #боди для передачи в запрос создания набора с тестируемым name
     current_kit_body = data.new_kit_body.copy()
     current_kit_body["name"] = kit_body
-    current_headers_create_kit = data.headers_create_kit.copy()
-    current_headers_create_kit["Authorization"] = "Bearer " + auth_token #хэдер с актуальным токеном
-    return requests.post(configuration.URL_SERVICE + configuration.CREATE_KIT_PATH,
-                         json=current_kit_body,
-                         headers=current_headers_create_kit)
+    return current_kit_body
 
-response = post_new_client_kit("Тестовый набор")
-print(response.json())
+def new_token(): # хэдер с актуальным токеном
+    response = post_new_user(data.user_body)
+    dict = response.json()  # получить словарь из объекта Response
+    auth_token = dict['authToken']  # переменная, которая хранит актуальный токен
+    current_headers_create_kit = data.headers_create_kit.copy()  # скопируем хэдеры headers_create_kit, чтобы не менять в исходном словаре
+    current_headers_create_kit["Authorization"] = "Bearer " + auth_token
+    return current_headers_create_kit
+
+def post_new_client_kit(kit_body): # ф-ия создания набора и получения тестируемого body в ответ
+    return requests.post(configuration.URL_SERVICE + configuration.CREATE_KIT_PATH,
+                         json=new_name_create_kit(kit_body),
+                         headers=new_token())

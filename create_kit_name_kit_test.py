@@ -25,7 +25,7 @@ def test_create_kit_511_letter_name_get_success_response():
 
 # Тест 3: Допустимое количество символов (0)
 def test_create_kit_0_letter_name_get_success_response():
-    positive_assert("")
+    negative_assert("")
 
 # Тест 4: Неопустимое количество символов (512)
 def test_create_kit_512_letter_name_get_error_response():
